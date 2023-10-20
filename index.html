@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BMI Calculator</h2>
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight">
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" placeholder="Enter height">
+
+        <button id="calculateBtn">Calculate BMI</button>
+        <p id="result">Your BMI: </p>
+    </div>
+
+    <script>
+        const calculateBtn = document.getElementById('calculateBtn');
+        const weightInput = document.getElementById('weight');
+        const heightInput = document.getElementById('height');
+        const resultParagraph = document.getElementById('result');
+
+        calculateBtn.addEventListener('click', () => {
+            const weight = parseFloat(weightInput.value);
+            const height = parseFloat(heightInput.value) / 100; // Convert height to meters
+
+            if (isNaN(weight) || isNaN(height) || height <= 0 || weight <= 0) {
+                alert('Please enter valid weight and height values.');
+                return;
+            }
+
+            const bmi = weight / (height * height);
+            resultParagraph.textContent = `Your BMI: ${bmi.toFixed(2)}`;
+
+            // Interpret BMI
+            let interpretation = '';
+            if (bmi < 18.5) {
+                interpretation = 'Underweight';
+            } else if (bmi < 24.9) {
+                interpretation = 'Normal weight';
+            } else if (bmi < 29.9) {
+                interpretation = 'Overweight';
+            } else {
+                interpretation = 'Obese';
+            }
+
+            resultParagraph.textContent += ` (${interpretation})`;
+        });
+    </script>
+</body>
+</html>
